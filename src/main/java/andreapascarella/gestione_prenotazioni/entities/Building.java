@@ -8,26 +8,26 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-@Table(name = "users")
-public class User {
+@Table(name = "buildings")
+public class Building {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
-    private long userId;
+    private long buildingId;
 
     @Column(nullable = false)
-    private String username;
+    private String buildingName;
 
     @Column(nullable = false)
-    private String fullName;
+    private String address;
 
     @Column(nullable = false)
-    private String email;
+    private String city;
 
-    public User(String username, String fullname, String email) {
-        this.username = username;
-        this.fullName = fullname;
-        this.email = email;
+    public Building(String buildingName, String address, String city) {
+        this.buildingName = buildingName;
+        this.address = address;
+        this.city = city;
     }
 }
