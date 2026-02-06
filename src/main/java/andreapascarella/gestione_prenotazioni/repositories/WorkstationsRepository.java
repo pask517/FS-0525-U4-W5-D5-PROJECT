@@ -1,12 +1,13 @@
 package andreapascarella.gestione_prenotazioni.repositories;
 
 import andreapascarella.gestione_prenotazioni.entities.Building;
+import andreapascarella.gestione_prenotazioni.entities.Workstation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BuildingsRepository extends JpaRepository<Building, Long> {
+public interface WorkstationsRepository extends JpaRepository<Workstation, Long> {
 
-    boolean existsByBuildingName(String buildingName);
+    boolean existsByBuildingAndDescription(Building building, String description);
 
 }

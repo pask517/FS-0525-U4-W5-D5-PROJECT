@@ -1,10 +1,7 @@
 package andreapascarella.gestione_prenotazioni.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -18,6 +15,7 @@ public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
     private long reservationId;
 
     @ManyToOne
@@ -31,9 +29,9 @@ public class Reservation {
     @Column(nullable = false)
     private LocalDate reservationDate;
 
-    public Reservation(Workstation workstation, User user, LocalDate reservationDate) {
+    public Reservation(Workstation workstation, User user, int year, int month, int day) {
         this.workstation = workstation;
         this.user = user;
-        this.reservationDate = reservationDate;
+        this.reservationDate = LocalDate.of(year, month, day);
     }
 }

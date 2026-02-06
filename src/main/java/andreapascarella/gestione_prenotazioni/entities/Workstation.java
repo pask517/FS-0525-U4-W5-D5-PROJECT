@@ -15,7 +15,6 @@ public class Workstation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
-    @Column(name = "workstation_id")
     private long workstationId;
 
     @Column(nullable = false)
