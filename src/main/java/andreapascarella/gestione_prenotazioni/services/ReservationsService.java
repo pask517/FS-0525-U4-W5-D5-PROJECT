@@ -25,11 +25,16 @@ public class ReservationsService {
     }
 
     public void saveReservation(Reservation reservation) {
-        if (reservationsRepository.filterByBuildingIdAndWorkstationIdAndReservationDate(reservation.getWorkstation().getBuilding().getBuildingId(), reservation.getWorkstation().getWorkstationId(), reservation.getReservationDate()).size() >= reservation.getWorkstation().getMaxOccupancy())
+        if (reservationsRepository.filterReservationByBuildingIdAndWorkstationIdAndReservationDate(reservation.getWorkstation().getBuilding().getBuildingId(), reservation.getWorkstation().getWorkstationId(), reservation.getReservationDate()).size() >= reservation.getWorkstation().getMaxOccupancy())
             throw new ValidationException("La postazione é giá completamente occupata");
+
+        if (!reservationsRepository.filterReservationByUserIdAndReservationDate(reservation.getUser().getUserId(), reservation.getReservationDate()).isEmpty())
+            throw new ValidationException("L'utente " + reservation.getUser().getUsername() + " ha giá una prenotazione in data: " + reservation.getReservationDate());
 
         reservationsRepository.save(reservation);
 
         log.info("La prenotazione alla postazione con descrizione: " + reservation.getWorkstation().getDescription() + " é stata salvata correttamente!");
     }
+
+
 }
