@@ -1,6 +1,7 @@
 package andreapascarella.gestione_prenotazioni.services;
 
 import andreapascarella.gestione_prenotazioni.entities.User;
+import andreapascarella.gestione_prenotazioni.exceptions.NotFoundException;
 import andreapascarella.gestione_prenotazioni.exceptions.ValidationException;
 import andreapascarella.gestione_prenotazioni.repositories.UsersRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -35,5 +36,9 @@ public class UsersService {
         this.usersRepository.save(newUser);
 
         log.info("L' utente " + newUser.getUsername() + " é stato salvato correttamente!");
+    }
+
+    public User findUserByUserId(long userId) {
+        return usersRepository.findById(userId).orElseThrow(() -> new NotFoundException(userId));
     }
 }

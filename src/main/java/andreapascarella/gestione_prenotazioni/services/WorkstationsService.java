@@ -1,11 +1,15 @@
 package andreapascarella.gestione_prenotazioni.services;
 
 import andreapascarella.gestione_prenotazioni.entities.Workstation;
+import andreapascarella.gestione_prenotazioni.enums.WorkstationType;
+import andreapascarella.gestione_prenotazioni.exceptions.NotFoundException;
 import andreapascarella.gestione_prenotazioni.exceptions.ValidationException;
 import andreapascarella.gestione_prenotazioni.repositories.ReservationsRepository;
 import andreapascarella.gestione_prenotazioni.repositories.WorkstationsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -30,7 +34,14 @@ public class WorkstationsService {
         log.info("Postazione con descrizione " + workstation.getDescription() + " salvata correttamente!");
     }
 
-    //public boolean isWorkstationFree(Long workstationId, LocalDate reservationDate) {
-    //  return reservationsRepository.existsByWorkstationIdAndReservationDate(workstationId, reservationDate);
-    // }
+    public Workstation findWorkstationByWorkstationId(long workstationId) {
+        return workstationsRepository.findById(workstationId).orElseThrow(() -> new NotFoundException(workstationId));
+    }
+
+    public List<Workstation> filterWorkstationByWorkstationTypeAndCity(WorkstationType workstationType, String city) {
+        List<Workstation> found = workstationsRepository.filterWorkstationByWorkstationTypeAndCity(workstationType, city);
+        if (found.isEmpty())
+            throw new NotFoundException("Nessuna postazione corrispondente ai criteri di ricerca richiesti!");
+        return found;
+    }
 }
